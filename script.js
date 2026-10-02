@@ -596,17 +596,17 @@ function renderHeroThali() {
   DOM.heroThaliPrice.innerHTML = `₹${schedule.price} <span class="unit">/ full plate</span>`;
 
   DOM.heroThaliItemsList.innerHTML = `
-    <div class="thali-dish-row">
-      <div class="dish-bullet"><i class="fa-solid fa-sun"></i></div>
-      <div><strong>Lunch:</strong> ${schedule.lunch.main} + ${schedule.lunch.dry}</div>
+    <div class="swiggy-thali-chip lunch-chip">
+      <span class="chip-badge">LUNCH</span>
+      <span class="chip-text">${schedule.lunch.main} • ${schedule.lunch.dry}</span>
     </div>
-    <div class="thali-dish-row">
-      <div class="dish-bullet"><i class="fa-solid fa-moon"></i></div>
-      <div><strong>Dinner:</strong> ${schedule.dinner.main} + ${schedule.dinner.dry}</div>
+    <div class="swiggy-thali-chip dinner-chip">
+      <span class="chip-badge">DINNER</span>
+      <span class="chip-text">${schedule.dinner.main} • ${schedule.dinner.dry}</span>
     </div>
-    <div class="thali-dish-row">
-      <div class="dish-bullet"><i class="fa-solid fa-bread-slice"></i></div>
-      <div><strong>Included:</strong> 4 Butter Rotis, Basmati Rice, Raita & Dessert</div>
+    <div class="swiggy-thali-chip sides-chip">
+      <span class="chip-badge">INCLUDED</span>
+      <span class="chip-text">4 Butter Rotis, Dal Tadka, Basmati Rice & Sweet</span>
     </div>
   `;
 
@@ -783,37 +783,44 @@ function renderProducts() {
     const inCartQty = cartItem ? cartItem.qty : 0;
 
     return `
-      <div class="product-card" data-id="${item.id}">
+      <div class="product-card swiggy-card" data-id="${item.id}">
         <div class="card-img-container">
           <img src="${item.image || 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&auto=format&fit=crop&q=60'}" 
                alt="${item.name}" 
                loading="lazy"
                onerror="this.src='https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&auto=format&fit=crop&q=60'">
+          
+          <!-- Swiggy Pure Veg Icon -->
+          <div class="swiggy-veg-icon" title="100% Pure Veg">
+            <span class="veg-dot"></span>
+          </div>
+
           ${item.badge ? `<span class="card-badge">${item.badge}</span>` : ''}
-          <span class="card-category-tag">${getCategoryName(item.category)}</span>
-        </div>
 
-        <div class="card-body">
-          <h3 class="item-name">${item.name}</h3>
-          <span class="item-unit">${item.unit || 'Standard'}</span>
-          <p class="item-desc">${item.desc || 'Freshly prepared and packed with hygienic quality standards.'}</p>
-
-          <div class="card-footer">
-            <span class="card-price">₹${item.price}</span>
-
+          <!-- Swiggy Floating Action Button -->
+          <div class="swiggy-card-action">
             ${!item.inStock ? `
               <span class="status-badge out-of-stock">Out of Stock</span>
             ` : inCartQty > 0 ? `
-              <div class="card-qty-control">
-                <button onclick="decrementProduct('${item.id}')" title="Reduce"><i class="fa-solid fa-minus"></i></button>
+              <div class="swiggy-qty-control">
+                <button onclick="decrementProduct('${item.id}')" title="Reduce" aria-label="Decrease">−</button>
                 <span>${inCartQty}</span>
-                <button onclick="incrementProduct('${item.id}')" title="Add more"><i class="fa-solid fa-plus"></i></button>
+                <button onclick="incrementProduct('${item.id}')" title="Add more" aria-label="Increase">+</button>
               </div>
             ` : `
-              <button class="add-cart-btn" onclick="quickAddProduct('${item.id}')">
-                <i class="fa-solid fa-plus"></i> Add
+              <button class="swiggy-add-btn" onclick="quickAddProduct('${item.id}')">
+                ADD <span class="plus-icon">+</span>
               </button>
             `}
+          </div>
+        </div>
+
+        <div class="card-body">
+          <h3 class="item-name" title="${item.name}">${item.name}</h3>
+          <span class="item-unit">${item.unit || 'Standard pack'}</span>
+          <div class="card-bottom-row">
+            <span class="card-price">₹${item.price}</span>
+            <span class="card-category-tag">${getCategoryName(item.category)}</span>
           </div>
         </div>
       </div>
