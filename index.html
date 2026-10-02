@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restrofe | General Shop, Cafe & Daily Thalis</title>
+  
+  <!-- Lexend Font as requested: 16px/1.55 "Lexend",system-ui,sans-serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons for clean UI -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-announcement">
+    <div class="container announcement-inner">
+      <span><i class="fa-solid fa-sparkles"></i> <strong>Welcome to Restrofe!</strong> Fresh Shakes, Chilled Coffee, Daily Groceries & Homestyle Thalis.</span>
+      <span class="announcement-badge"><i class="fa-solid fa-clock"></i> Today's Special Thali is live!</span>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <div class="brand-logo" id="brandLogo">
+        <div class="logo-dots">
+          <span></span><span></span>
+          <span></span><span></span>
+        </div>
+        <div class="brand-text">
+          <h1>Restrofe</h1>
+          <span class="sub-tag">Shop & Cafe</span>
+        </div>
+      </div>
+
+      <!-- Search Input -->
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search biscuits, cold coffee, juices, thali...">
+        <button id="clearSearchBtn" class="clear-btn hidden"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="nav-actions">
+        <button class="nav-btn today-thali-btn" id="viewTodayThaliBtn">
+          <i class="fa-solid fa-calendar-day"></i>
+          <span>Today's Thali</span>
+        </button>
+
+        <button class="nav-btn admin-toggle-btn" id="openAdminModalBtn">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span id="adminBtnText">Admin</span>
+        </button>
+
+        <button class="nav-btn cart-btn" id="openCartBtn">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-label">Cart</span>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="hero-section">
+    <div class="container hero-wrapper">
+      <div class="hero-text">
+        <span class="hero-tag"><i class="fa-solid fa-utensils"></i> All-In-One Store & Daily Kitchen</span>
+        <h2>Everything You Love: From <span>Crispy Biscuits</span> to <span>Thick Shakes</span> & <span>Daily Thalis</span></h2>
+        <p>Order daily essentials, freshly blended beverages, and subscribe or order our famous 7-day rotating homestyle thalis.</p>
+        
+        <div class="hero-stats">
+          <div class="stat-pill"><i class="fa-solid fa-check"></i> Fresh Ingredients</div>
+          <div class="stat-pill"><i class="fa-solid fa-bolt"></i> 15-Min Fast Prep</div>
+          <div class="stat-pill"><i class="fa-solid fa-calendar-check"></i> Different Thali Every Day</div>
+        </div>
+      </div>
+
+      <!-- Hero Today's Thali Snapshot Card -->
+      <div class="hero-card-side">
+        <div class="today-thali-hero-card" id="heroTodayThaliCard">
+          <div class="card-status-pill">
+            <span class="pulse-dot"></span> <span id="heroCurrentDay">TODAY'S MENU</span>
+          </div>
+          <div class="hero-thali-header">
+            <div>
+              <h3 id="heroThaliTitle">Deluxe Homestyle Thali</h3>
+              <div class="thali-price" id="heroThaliPrice">₹120 <span class="unit">/ plate</span></div>
+            </div>
+            <span class="veg-badge"><i class="fa-solid fa-circle"></i> 100% Pure Veg</span>
+          </div>
+
+          <div class="thali-items-preview" id="heroThaliItemsList">
+            <!-- Dynamically populated -->
+          </div>
+
+          <div class="hero-thali-actions">
+            <button class="primary-btn hero-add-thali-btn" id="heroAddThaliBtn">
+              <i class="fa-solid fa-cart-plus"></i> Add Today's Thali
+            </button>
+            <button class="outline-btn hero-view-week-btn" id="heroViewWeekBtn">
+              View 7-Day Schedule
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category Nav Tabs -->
+  <nav class="category-bar">
+    <div class="container">
+      <div class="category-scroll" id="categoryTabs">
+        <button class="cat-pill active" data-category="all">
+          <i class="fa-solid fa-border-all"></i> All Items
+        </button>
+        <button class="cat-pill" data-category="thali">
+          <i class="fa-solid fa-bowl-rice"></i> Daily Thalis & Meals
+        </button>
+        <button class="cat-pill" data-category="coffee">
+          <i class="fa-solid fa-mug-hot"></i> Cold Coffee
+        </button>
+        <button class="cat-pill" data-category="shakes">
+          <i class="fa-solid fa-blender"></i> Shakes & Smoothies
+        </button>
+        <button class="cat-pill" data-category="juices">
+          <i class="fa-solid fa-wine-glass"></i> Fresh Juices
+        </button>
+        <button class="cat-pill" data-category="biscuits">
+          <i class="fa-solid fa-cookie-bite"></i> Biscuits & Snacks
+        </button>
+        <button class="cat-pill" data-category="general">
+          <i class="fa-solid fa-basket-shopping"></i> General Store
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 7-Day Thali Schedule Section -->
+  <section class="thali-schedule-section" id="thaliScheduleSection">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <span class="badge-accent"><i class="fa-solid fa-calendar-days"></i> Rotating Weekly Menu</span>
+          <h2>Weekly Thali Menu Schedule</h2>
+          <p>Know what meal is cooked fresh every day of the week. Prepared fresh with homestyle love and purity.</p>
+        </div>
+        <div class="admin-thali-edit-hint" id="adminThaliHint" style="display: none;">
+          <button class="ghost-btn" id="quickEditThaliBtn"><i class="fa-solid fa-pen-to-square"></i> Edit Weekly Schedule in Admin</button>
+        </div>
+      </div>
+
+      <!-- Day Selector Tabs -->
+      <div class="days-tab-nav" id="daysTabNav">
+        <!-- Rendered via JS for Monday - Sunday -->
+      </div>
+
+      <!-- Day Detail Card -->
+      <div class="day-thali-detail-card" id="dayThaliDetailCard">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Products Catalog Section -->
+  <main class="products-section">
+    <div class="container">
+      <div class="catalog-header">
+        <div>
+          <h2 id="catalogTitle">Store Items & Cafe Menu</h2>
+          <p id="catalogSubtitle">Showing all available products and fresh beverages</p>
+        </div>
+        <div class="catalog-controls">
+          <label for="sortSelect" class="sr-only">Sort By</label>
+          <select id="sortSelect" class="custom-select">
+            <option value="featured">Featured First</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name">Name: A to Z</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="productsGrid">
+        <!-- Dynamically rendered -->
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state hidden" id="emptyState">
+        <i class="fa-solid fa-magnifying-glass empty-icon"></i>
+        <h3>No products found</h3>
+        <p>Try searching with another keyword or pick a different category.</p>
+        <button class="primary-btn" id="resetFiltersBtn">View All Products</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="store-footer">
+    <div class="container footer-content">
+      <div class="footer-col brand-col">
+        <div class="brand-logo">
+          <div class="logo-dots">
+            <span></span><span></span>
+            <span></span><span></span>
+          </div>
+          <div class="brand-text">
+            <h2>Restrofe</h2>
+            <span class="sub-tag">General Store & Daily Kitchen</span>
+          </div>
+        </div>
+        <p>Your one-stop neighborhood corner for packaged biscuits, delicious cold beverages, thick shakes, and pure homestyle daily thali meals.</p>
+        <div class="footer-badges">
+          <span><i class="fa-solid fa-certificate"></i> Fresh & Hygienic</span>
+          <span><i class="fa-solid fa-leaf"></i> 100% Vegetarian Thali</span>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Menu Highlights</h4>
+        <ul>
+          <li><a href="#" class="footer-cat-link" data-category="thali">7-Day Thali Schedule</a></li>
+          <li><a href="#" class="footer-cat-link" data-category="coffee">Cold Coffee Varieties</a></li>
+          <li><a href="#" class="footer-cat-link" data-category="shakes">Gourmet Thick Shakes</a></li>
+          <li><a href="#" class="footer-cat-link" data-category="juices">100% Fresh Cold Juices</a></li>
+          <li><a href="#" class="footer-cat-link" data-category="biscuits">Biscuits & Namkeens</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Shop Hours & Info</h4>
+        <p><i class="fa-regular fa-clock"></i> <strong>Every Day:</strong> 7:30 AM – 11:00 PM</p>
+        <p><i class="fa-solid fa-bowl-food"></i> <strong>Lunch Thali:</strong> 11:30 AM – 3:30 PM</p>
+        <p><i class="fa-solid fa-moon"></i> <strong>Dinner Thali:</strong> 7:00 PM – 10:30 PM</p>
+        <p><i class="fa-solid fa-phone"></i> Orders: +91 98765 43210</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Admin Access</h4>
+        <p>Shop owners can log in to update items, add new beverages, or update the weekly thali menu.</p>
+        <button class="footer-admin-btn" id="footerAdminBtn">
+          <i class="fa-solid fa-lock"></i> Open Admin Portal
+        </button>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container bottom-row">
+        <span>© <span id="currentYear">2026</span> Restrofe Store. All rights reserved.</span>
+        <span>Styled with NeevStep Vibrant Indigo & Lexend Font</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================== -->
+  <!-- MODAL: Cart Drawer / Checkout -->
+  <!-- ============================================== -->
+  <div class="modal-backdrop hidden" id="cartModalBackdrop">
+    <div class="cart-drawer" id="cartDrawer">
+      <div class="drawer-header">
+        <div class="header-left">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <h3>Your Order Cart</h3>
+        </div>
+        <button class="icon-close-btn" id="closeCartBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="cart-items-container" id="cartItemsList">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="cart-footer" id="cartFooter">
+        <div class="cart-summary-row">
+          <span>Subtotal</span>
+          <span id="cartSubtotal">₹0</span>
+        </div>
+        <div class="cart-summary-row fee-row">
+          <span>Packaging & Handling</span>
+          <span class="free-text">FREE</span>
+        </div>
+        <div class="cart-summary-row grand-total">
+          <span>Total Payable</span>
+          <span id="cartTotal">₹0</span>
+        </div>
+
+        <div class="customer-info-box">
+          <input type="text" id="custName" placeholder="Your Name" class="cart-input">
+          <input type="tel" id="custPhone" placeholder="Mobile Number (WhatsApp)" class="cart-input">
+          <textarea id="custNotes" placeholder="Delivery address or special instructions (optional)" class="cart-textarea" rows="2"></textarea>
+        </div>
+
+        <button class="primary-btn checkout-whatsapp-btn" id="checkoutWhatsappBtn">
+          <i class="fa-brands fa-whatsapp"></i> Place Order via WhatsApp
+        </button>
+        <button class="outline-btn clear-cart-btn" id="clearCartBtn">Clear Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: Admin Login & Management (Matches Screenshot Theme) -->
+  <!-- ============================================== -->
+  <div class="modal-backdrop hidden" id="adminModalBackdrop">
+    <!-- Screen 1: Login Screen (Exact recreation of user's uploaded screenshot) -->
+    <div class="admin-login-card" id="adminLoginCard">
+      <div class="login-card-header">
+        <div class="login-logo-brand">
+          <div class="logo-dots-small">
+            <span></span><span></span>
+            <span></span><span></span>
+          </div>
+          <span class="login-brand-name">Restrofe</span>
+        </div>
+        <button class="login-close-x" id="closeAdminModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="login-body">
+        <h2 class="admin-login-title">Admin</h2>
+        <p class="admin-login-sub">The Restrofe planning room.</p>
+
+        <!-- Error banner styled as in user's screenshot -->
+        <div class="admin-error-banner hidden" id="adminErrorBanner">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <span id="adminErrorMsg">That login or password is not right.</span>
+        </div>
+
+        <form id="adminLoginForm">
+          <div class="form-group">
+            <label for="adminUsernameInput">Login</label>
+            <input type="text" id="adminUsernameInput" class="styled-input" placeholder="admin" value="admin" autocomplete="username" required>
+          </div>
+
+          <div class="form-group">
+            <label for="adminPasswordInput">Password</label>
+            <input type="password" id="adminPasswordInput" class="styled-input" placeholder="admin123" value="admin123" autocomplete="current-password" required>
+          </div>
+
+          <button type="submit" class="admin-submit-btn" id="adminLoginSubmitBtn">
+            Log in
+          </button>
+        </form>
+
+        <div class="login-hint">
+          <span><i class="fa-solid fa-key"></i> Demo Credentials: <strong>admin</strong> / <strong>admin123</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 2: Admin Dashboard & Control Center (Shown once logged in) -->
+    <div class="admin-dashboard-container hidden" id="adminDashboardContainer">
+      <div class="dashboard-header">
+        <div class="dash-title-group">
+          <div class="logo-dots-small">
+            <span></span><span></span>
+            <span></span><span></span>
+          </div>
+          <div>
+            <h2>Restrofe Admin Room</h2>
+            <p>Manage store inventory, beverages, prices, and weekly thali meals</p>
+          </div>
+        </div>
+        
+        <div class="dash-header-actions">
+          <button class="outline-btn small" id="resetDefaultDataBtn" title="Reset default catalog & schedule">
+            <i class="fa-solid fa-rotate-left"></i> Reset Defaults
+          </button>
+          <button class="outline-btn small logout-btn" id="adminLogoutBtn">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+          </button>
+          <button class="icon-close-btn" id="closeAdminDashBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      </div>
+
+      <!-- Dashboard Tabs -->
+      <div class="dash-tabs">
+        <button class="dash-tab active" data-tab="tab-add-product">
+          <i class="fa-solid fa-plus-circle"></i> Add New Product
+        </button>
+        <button class="dash-tab" data-tab="tab-thali-planner">
+          <i class="fa-solid fa-calendar-week"></i> Weekly Thali Planner
+        </button>
+        <button class="dash-tab" data-tab="tab-inventory">
+          <i class="fa-solid fa-boxes-stacked"></i> Manage Inventory (<span id="dashItemCount">0</span>)
+        </button>
+      </div>
+
+      <!-- TAB 1: ADD PRODUCT FORM -->
+      <div class="dash-tab-panel active" id="tab-add-product">
+        <div class="form-container">
+          <h3 id="productFormTitle"><i class="fa-solid fa-box-open"></i> Add New Product or Beverage</h3>
+          <p class="panel-sub">Easily add biscuits, cold coffees, fresh juices, shakes, or combo packs to the shop catalog.</p>
+
+          <!-- ============================================== -->
+          <!-- SMART BARCODE SCANNER & OPEN FOOD FACTS CARD -->
+          <!-- ============================================== -->
+          <div class="barcode-scanner-card">
+            <div class="scanner-card-header">
+              <div class="header-tag">
+                <i class="fa-solid fa-barcode"></i>
+                <strong>Smart Barcode & Food API Autofill</strong>
+              </div>
+              <span class="api-status-badge"><i class="fa-solid fa-earth-americas"></i> Open Food Facts API</span>
+            </div>
+
+            <p class="scanner-subtext">Scan any biscuit or food barcode with camera, or enter number to auto-grab product title, brand, net weight, ingredients & photos!</p>
+
+            <div class="scanner-controls-row">
+              <div class="barcode-input-group">
+                <i class="fa-solid fa-barcode barcode-field-icon"></i>
+                <input type="text" id="barcodeInput" placeholder="Enter barcode number (e.g. 8901063139329)" class="styled-input barcode-text-input">
+                <button type="button" class="primary-btn scan-fetch-btn" id="fetchBarcodeBtn">
+                  <i class="fa-solid fa-magnifying-glass"></i> <span id="fetchBtnText">Fetch Info</span>
+                </button>
+              </div>
+
+              <button type="button" class="outline-btn camera-scan-btn" id="toggleCameraScannerBtn">
+                <i class="fa-solid fa-camera"></i> <span id="cameraBtnText">Scan with Camera</span>
+              </button>
+            </div>
+
+            <!-- Live Camera Scanner Viewport -->
+            <div class="camera-viewport-container hidden" id="cameraViewportContainer">
+              <div class="camera-viewport-header">
+                <span><i class="fa-solid fa-video"></i> Point camera steadily at product barcode</span>
+                <button type="button" class="close-camera-btn" id="closeCameraScannerBtn"><i class="fa-solid fa-xmark"></i> Stop Camera</button>
+              </div>
+              <div id="barcodeReader" class="barcode-reader-box"></div>
+              <div class="camera-scan-hint">Supported: EAN-13, EAN-8, UPC-A, Code-128 & QR Codes</div>
+            </div>
+
+            <!-- Quick Sample Barcode Pills for instant testing -->
+            <div class="quick-barcodes-strip">
+              <span class="quick-label"><i class="fa-solid fa-bolt"></i> Quick Test:</span>
+              <button type="button" class="sample-barcode-pill" data-barcode="8901063139329">🍫 Britannia Bourbon</button>
+              <button type="button" class="sample-barcode-pill" data-barcode="8901719134845">🍪 Parle-G Biscuit</button>
+              <button type="button" class="sample-barcode-pill" data-barcode="8901063093522">🧈 Good Day Cashew</button>
+              <button type="button" class="sample-barcode-pill" data-barcode="8906010500764">🍟 Balaji Pataka</button>
+              <button type="button" class="sample-barcode-pill" data-barcode="7622210449283">🍪 Prince Biscuit</button>
+              <button type="button" class="sample-barcode-pill" data-barcode="3017620422003">🌰 Nutella Spread</button>
+              <button type="button" class="sample-barcode-pill" data-barcode="5449000000996">🥤 Coca Cola</button>
+            </div>
+          </div>
+
+          <form id="productForm">
+            <input type="hidden" id="editProductId" value="">
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="prodName">Product Name *</label>
+                <input type="text" id="prodName" class="styled-input" placeholder="e.g. Bourbon Dark Chocolate, Hazelnut Cold Coffee" required>
+              </div>
+
+              <div class="form-group">
+                <label for="prodCategory">Category *</label>
+                <select id="prodCategory" class="styled-input" required>
+                  <option value="biscuits">🍪 Biscuits & Packaged Snacks</option>
+                  <option value="coffee">☕ Cold Coffee</option>
+                  <option value="shakes">🥤 Shakes & Smoothies</option>
+                  <option value="juices">🧃 Fresh Cold Juices</option>
+                  <option value="thali">🍱 Thali & Meals</option>
+                  <option value="general">🛒 General Store Item</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label for="prodPrice">Price (₹) *</label>
+                <input type="number" id="prodPrice" class="styled-input" min="1" step="1" placeholder="e.g. 35, 90, 120" required>
+              </div>
+
+              <div class="form-group">
+                <label for="prodUnit">Serving / Unit Size</label>
+                <input type="text" id="prodUnit" class="styled-input" placeholder="e.g. 150g pack, 350ml glass, Full Plate" required>
+              </div>
+
+              <div class="form-group">
+                <label for="prodBadge">Special Badge (Optional)</label>
+                <input type="text" id="prodBadge" class="styled-input" placeholder="e.g. Bestseller, Chilled, New">
+              </div>
+            </div>
+
+            <!-- PRODUCT PHOTO MANAGER (API Images, Camera Capture, Device Upload) -->
+            <div class="product-image-manager">
+              <label><strong>Product Photo Options</strong></label>
+              
+              <div class="image-actions-toolbar">
+                <button type="button" class="image-tool-btn primary" id="captureNewPhotoBtn">
+                  <i class="fa-solid fa-camera"></i> <span>Capture New Photo</span>
+                </button>
+                <button type="button" class="image-tool-btn" id="uploadDevicePhotoBtn">
+                  <i class="fa-solid fa-upload"></i> <span>Upload from Device</span>
+                </button>
+                <button type="button" class="image-tool-btn" id="openImagePresetsBtn">
+                  <i class="fa-solid fa-images"></i> <span>Pick Sample Preset</span>
+                </button>
+              </div>
+
+              <!-- Hidden native file inputs for camera snap and gallery selection -->
+              <input type="file" id="cameraFileInput" accept="image/*" capture="environment" class="hidden">
+              <input type="file" id="deviceFileInput" accept="image/*" class="hidden">
+
+              <!-- Open Food Facts API Images Strip (Rendered dynamically when barcode is fetched) -->
+              <div class="api-images-selector hidden" id="apiImagesSelector">
+                <div class="api-images-title">
+                  <i class="fa-solid fa-circle-check"></i>
+                  <span>Images from Open Food Facts API (Click to select):</span>
+                </div>
+                <div class="api-thumbnails-row" id="apiThumbnailsRow">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+
+              <!-- Image URL Input & Live Preview -->
+              <div class="image-preview-and-input">
+                <div class="preview-box" id="productImagePreviewBox">
+                  <img id="productImagePreview" src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&auto=format&fit=crop&q=60" alt="Preview">
+                  <span class="preview-tag" id="imageSourceTag">Preview</span>
+                </div>
+                <div class="input-col">
+                  <label for="prodImage" class="mini-label">Direct Image URL / Captured Data</label>
+                  <input type="url" id="prodImage" class="styled-input" placeholder="Image link or captured photo will appear here">
+                  <p class="input-helper"><i class="fa-solid fa-info-circle"></i> Camera captures, gallery uploads, or Open Food Facts photos will fill here automatically.</p>
+                </div>
+              </div>
+
+              <!-- Preset images strip -->
+              <div class="preset-images-strip hidden" id="presetImagesStrip">
+                <!-- Preset image chips -->
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 14px;">
+              <label for="prodDesc">Description / Ingredients</label>
+              <textarea id="prodDesc" class="styled-input" rows="3" placeholder="Describe the item, ingredients, flavor, or serving details..."></textarea>
+            </div>
+
+            <div class="form-footer-actions">
+              <label class="switch-container">
+                <input type="checkbox" id="prodInStock" checked>
+                <span class="switch-slider"></span>
+                <span class="switch-label">In Stock & Available to Order</span>
+              </label>
+
+              <div class="btn-group">
+                <button type="button" class="outline-btn hidden" id="cancelEditProdBtn">Cancel Edit</button>
+                <button type="submit" class="admin-submit-btn inline" id="saveProdBtn">
+                  <i class="fa-solid fa-plus"></i> Save Product to Catalog
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- TAB 2: WEEKLY THALI PLANNER -->
+      <div class="dash-tab-panel" id="tab-thali-planner">
+        <div class="form-container">
+          <div class="thali-planner-heading">
+            <div>
+              <h3><i class="fa-solid fa-calendar-days"></i> Day-by-Day Thali Meal Planner</h3>
+              <p class="panel-sub">Configure what meal is served on which day for Lunch and Dinner. Changes reflect instantly on the customer menu.</p>
+            </div>
+            <div class="select-day-wrapper">
+              <label for="thaliDaySelect"><strong>Select Day:</strong></label>
+              <select id="thaliDaySelect" class="styled-input inline-select">
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+              </select>
+            </div>
+          </div>
+
+          <form id="thaliDayForm" class="thali-day-edit-form">
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="thaliNameForDay">Thali Name / Title</label>
+                <input type="text" id="thaliNameForDay" class="styled-input" placeholder="e.g. Shahi North Indian Thali" required>
+              </div>
+              <div class="form-group">
+                <label for="thaliPriceForDay">Price (₹)</label>
+                <input type="number" id="thaliPriceForDay" class="styled-input" min="1" placeholder="e.g. 120" required>
+              </div>
+            </div>
+
+            <!-- Lunch Meal Section -->
+            <div class="meal-edit-box">
+              <div class="meal-box-title">
+                <i class="fa-solid fa-sun meal-icon lunch"></i>
+                <h4>Lunch Menu (11:30 AM – 3:30 PM)</h4>
+              </div>
+              <div class="form-group">
+                <label for="thaliLunchMain">Main Curry / Special Gravy *</label>
+                <input type="text" id="thaliLunchMain" class="styled-input" placeholder="e.g. Punjabi Rajma Masala / Paneer Butter Masala" required>
+              </div>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="thaliLunchDry">Dry Sabzi of the Day</label>
+                  <input type="text" id="thaliLunchDry" class="styled-input" placeholder="e.g. Aloo Gobhi Matar / Bhindi Masala" required>
+                </div>
+                <div class="form-group">
+                  <label for="thaliLunchDal">Dal / Lentil</label>
+                  <input type="text" id="thaliLunchDal" class="styled-input" placeholder="e.g. Dal Tadka / Yellow Dal Fry" required>
+                </div>
+              </div>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="thaliLunchBreads">Breads & Rice</label>
+                  <input type="text" id="thaliLunchBreads" class="styled-input" placeholder="e.g. 4 Butter Tawa Rotis + Jeera Rice" required>
+                </div>
+                <div class="form-group">
+                  <label for="thaliLunchSides">Sides & Sweet</label>
+                  <input type="text" id="thaliLunchSides" class="styled-input" placeholder="e.g. Boondi Raita, Salad, Gulab Jamun" required>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dinner Meal Section -->
+            <div class="meal-edit-box">
+              <div class="meal-box-title">
+                <i class="fa-solid fa-moon meal-icon dinner"></i>
+                <h4>Dinner Menu (7:00 PM – 10:30 PM)</h4>
+              </div>
+              <div class="form-group">
+                <label for="thaliDinnerMain">Main Gravy / Special *</label>
+                <input type="text" id="thaliDinnerMain" class="styled-input" placeholder="e.g. Kadhi Pakoda / Shahi Paneer" required>
+              </div>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="thaliDinnerDry">Dry Sabzi</label>
+                  <input type="text" id="thaliDinnerDry" class="styled-input" placeholder="e.g. Mix Veg / Jeera Aloo" required>
+                </div>
+                <div class="form-group">
+                  <label for="thaliDinnerDal">Dal</label>
+                  <input type="text" id="thaliDinnerDal" class="styled-input" placeholder="e.g. Dal Makhani / Panchmel Dal" required>
+                </div>
+              </div>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="thaliDinnerBreads">Breads & Rice</label>
+                  <input type="text" id="thaliDinnerBreads" class="styled-input" placeholder="e.g. 4 Phulkas + Steamed Basmati Rice" required>
+                </div>
+                <div class="form-group">
+                  <label for="thaliDinnerSides">Sides & Sweet</label>
+                  <input type="text" id="thaliDinnerSides" class="styled-input" placeholder="e.g. Fresh Curd, Pickle, Moong Dal Halwa" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="thaliDaySpecialNote">Chef's Special Note for this Day</label>
+              <input type="text" id="thaliDaySpecialNote" class="styled-input" placeholder="e.g. Cooked with pure desi ghee. Extra raita on request!">
+            </div>
+
+            <div class="form-footer-actions right">
+              <button type="submit" class="admin-submit-btn inline">
+                <i class="fa-solid fa-check"></i> Update Menu for <span id="saveDayNameBtnText">Monday</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- TAB 3: INVENTORY MANAGER -->
+      <div class="dash-tab-panel" id="tab-inventory">
+        <div class="form-container">
+          <div class="inventory-controls">
+            <div>
+              <h3><i class="fa-solid fa-list-check"></i> Manage Current Products</h3>
+              <p class="panel-sub">Edit details, toggle stock availability, or remove items.</p>
+            </div>
+            <div class="inv-filter">
+              <input type="text" id="invSearchInput" class="styled-input small" placeholder="Filter items...">
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="inventory-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Unit</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="inventoryTableBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Floating Cart Bar (Appears when items are in cart) -->
+  <div class="mobile-floating-cart hidden" id="mobileFloatingCart">
+    <div class="floating-cart-info">
+      <span class="floating-qty" id="floatingCartCount">0 items</span>
+      <span class="floating-divider">•</span>
+      <span class="floating-price" id="floatingCartPrice">₹0</span>
+    </div>
+    <button class="floating-view-btn" id="floatingViewCartBtn">
+      <span>View Cart</span> <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </div>
+
+  <!-- Mobile Bottom Navigation Bar (Fixed for quick thumb access) -->
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <button class="mob-nav-item active" id="mobNavHome">
+      <i class="fa-solid fa-store"></i>
+      <span>Store</span>
+    </button>
+    <button class="mob-nav-item" id="mobNavThali">
+      <i class="fa-solid fa-bowl-rice"></i>
+      <span>Thalis</span>
+    </button>
+    <button class="mob-nav-item" id="mobNavSearch">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <span>Search</span>
+    </button>
+    <button class="mob-nav-item" id="mobNavCart">
+      <div class="mob-icon-wrap">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span class="mob-cart-badge hidden" id="mobCartBadge">0</span>
+      </div>
+      <span>Cart</span>
+    </button>
+    <button class="mob-nav-item" id="mobNavAdmin">
+      <i class="fa-solid fa-shield-halved"></i>
+      <span>Admin</span>
+    </button>
+  </nav>
+
+  <!-- Toast Notification Alert -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- HTML5 QR / Barcode Scanner Library -->
+  <script src="libs/html5-qrcode.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
