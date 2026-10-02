@@ -4,11 +4,11 @@ A modern, responsive web application for a general shop and cafe with daily rota
 
 ---
 
-## 🚀 Live Local URL
-The site is running on:
-**[http://localhost:3000](http://localhost:3000)**
+## 🌐 Live Production URL (Vercel)
+🚀 **[https://restrofe-six.vercel.app](https://restrofe-six.vercel.app)**
 
-You can also open [`index.html`](file:///Users/vikash/Downloads/restrofe/index.html) directly in any web browser.
+## 💻 Local URL
+- **[http://localhost:3000](http://localhost:3000)** (or open `index.html` directly)
 
 ---
 
