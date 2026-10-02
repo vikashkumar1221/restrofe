@@ -26,10 +26,10 @@
         </div>
         <div class="location-details">
           <div class="store-name-row">
-            <h3>Restrofe Store & Cafe</h3>
-            <span class="live-dot"></span>
+            <h1 class="store-brand-title">Restrofe</h1>
+            <span class="live-dot" title="Store Open"></span>
           </div>
-          <span class="store-tagline">Biscuits, Chilled Shakes & Homestyle Thalis</span>
+          <span class="store-tagline">General Shop, Cafe & Daily Thalis</span>
         </div>
       </div>
 
@@ -49,7 +49,7 @@
     <div class="container">
       <div class="app-search-box">
         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-        <input type="text" id="searchInput" placeholder='Search "Bourbon", "Cold Coffee", "Today&#39;s Thali"...'>
+        <input type="text" id="searchInput" placeholder='Search biscuits, shakes, cold coffee, snacks...'>
         <button id="clearSearchBtn" class="clear-btn hidden"><i class="fa-solid fa-xmark"></i></button>
       </div>
     </div>
@@ -91,7 +91,7 @@
     </div>
   </nav>
 
-  <!-- Zepto-Style "Today's Special Thali" Compact Promo Card (No bulky desktop hero) -->
+  <!-- Zepto-Style "Today's Special Thali" Compact Promo Card -->
   <section class="today-thali-app-card-section">
     <div class="container">
       <div class="today-thali-app-card" id="heroTodayThaliCard">
@@ -115,37 +115,11 @@
             <button class="app-add-thali-btn" id="heroAddThaliBtn">
               <i class="fa-solid fa-plus"></i> ADD THALI
             </button>
-            <button class="view-week-text-btn" id="heroViewWeekBtn">
-              Weekly Menu <i class="fa-solid fa-chevron-right"></i>
+            <button class="view-week-pill-btn" id="heroViewWeekBtn" type="button">
+              <i class="fa-solid fa-calendar-days"></i> 7-Day Menu
             </button>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 7-Day Thali Schedule Section -->
-  <section class="thali-schedule-section" id="thaliScheduleSection">
-    <div class="container">
-      <div class="section-header">
-        <div>
-          <span class="badge-accent"><i class="fa-solid fa-calendar-days"></i> Rotating Weekly Menu</span>
-          <h2>Weekly Thali Menu Schedule</h2>
-          <p>Know what meal is cooked fresh every day of the week. Prepared fresh with homestyle love and purity.</p>
-        </div>
-        <div class="admin-thali-edit-hint" id="adminThaliHint" style="display: none;">
-          <button class="ghost-btn" id="quickEditThaliBtn"><i class="fa-solid fa-pen-to-square"></i> Edit Weekly Schedule in Admin</button>
-        </div>
-      </div>
-
-      <!-- Day Selector Tabs -->
-      <div class="days-tab-nav" id="daysTabNav">
-        <!-- Rendered via JS for Monday - Sunday -->
-      </div>
-
-      <!-- Day Detail Card -->
-      <div class="day-thali-detail-card" id="dayThaliDetailCard">
-        <!-- Injected via JS -->
       </div>
     </div>
   </section>
@@ -239,6 +213,41 @@
       </div>
     </div>
   </footer>
+
+  <!-- ============================================== -->
+  <!-- MODAL: 7-Day Weekly Thali Menu Bottom Sheet -->
+  <!-- ============================================== -->
+  <div class="modal-backdrop hidden" id="thaliScheduleModalBackdrop">
+    <div class="thali-sheet-drawer" id="thaliScheduleDrawer">
+      <div class="drawer-header thali-sheet-header">
+        <div class="header-left">
+          <div class="thali-sheet-badge-icon"><i class="fa-solid fa-bowl-rice"></i></div>
+          <div>
+            <h3>Weekly Thali Menu</h3>
+            <span class="thali-sheet-subtitle"><i class="fa-solid fa-circle veg-dot-mini"></i> 100% Pure Veg • Homestyle Kitchen</span>
+          </div>
+        </div>
+        <button class="icon-close-btn" id="closeThaliScheduleBtn" title="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Admin Quick Edit Hint (when admin logged in) -->
+      <div class="admin-thali-edit-hint" id="adminThaliHint" style="display: none;">
+        <button class="ghost-btn" id="quickEditThaliBtn"><i class="fa-solid fa-pen-to-square"></i> Edit Schedule in Admin</button>
+      </div>
+
+      <!-- Swipeable Day Selector Tabs -->
+      <div class="thali-sheet-days-wrap">
+        <div class="days-tab-nav" id="daysTabNav">
+          <!-- Rendered via JS for Monday - Sunday -->
+        </div>
+      </div>
+
+      <!-- Day Detail Card (Rendered via JS into clean vertical stack) -->
+      <div class="day-thali-detail-scroll" id="dayThaliDetailCard">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
 
   <!-- ============================================== -->
   <!-- MODAL: Cart Drawer / Checkout -->

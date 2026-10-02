@@ -463,7 +463,9 @@ const DOM = {
   heroAddThaliBtn: document.getElementById("heroAddThaliBtn"),
   heroViewWeekBtn: document.getElementById("heroViewWeekBtn"),
 
-  // Thali Schedule Section
+  // Thali Schedule Section & Sheet Modal
+  thaliScheduleModalBackdrop: document.getElementById("thaliScheduleModalBackdrop"),
+  closeThaliScheduleBtn: document.getElementById("closeThaliScheduleBtn"),
   daysTabNav: document.getElementById("daysTabNav"),
   dayThaliDetailCard: document.getElementById("dayThaliDetailCard"),
   adminThaliHint: document.getElementById("adminThaliHint"),
@@ -622,9 +624,27 @@ function renderHeroThali() {
 }
 
 // ==========================================
-// RENDER 7-DAY THALI SCHEDULE VIEWER
+// RENDER 7-DAY THALI SCHEDULE VIEWER (SHEET MODAL)
 // ==========================================
+function openThaliModal(day = null) {
+  if (day) state.selectedThaliDay = day;
+  renderThaliSchedule();
+  if (DOM.thaliScheduleModalBackdrop) {
+    DOM.thaliScheduleModalBackdrop.classList.remove("hidden");
+    document.body.classList.add("modal-open");
+  }
+}
+
+function closeThaliModal() {
+  if (DOM.thaliScheduleModalBackdrop) {
+    DOM.thaliScheduleModalBackdrop.classList.add("hidden");
+    document.body.classList.remove("modal-open");
+  }
+}
+
 function renderThaliSchedule() {
+  if (!DOM.daysTabNav || !DOM.dayThaliDetailCard) return;
+
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   const today = state.getTodayDayName();
 
@@ -636,12 +656,12 @@ function renderThaliSchedule() {
       <button class="day-tab-btn ${isActive ? 'active' : ''} ${isToday ? 'is-today' : ''}" data-day="${day}">
         ${isToday ? '<span class="today-indicator">Today</span>' : ''}
         <span class="day-name">${day}</span>
-        <span class="day-status">Thali Menu</span>
+        <span class="day-status">Menu</span>
       </button>
     `;
   }).join("");
 
-  // Attach click listener
+  // Attach click listener to day tabs
   DOM.daysTabNav.querySelectorAll(".day-tab-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       state.selectedThaliDay = btn.getAttribute("data-day");
@@ -649,83 +669,124 @@ function renderThaliSchedule() {
     });
   });
 
-  // 2. Day detail card
+  // 2. Day detail card - Single column stacked layout (Full width, zero vertical text issues)
   const curDayData = state.thaliSchedule[state.selectedThaliDay] || state.thaliSchedule["Monday"];
 
   DOM.dayThaliDetailCard.innerHTML = `
-    <div class="thali-detail-grid">
-      <!-- Lunch Box -->
-      <div class="meal-block">
-        <div class="meal-block-header">
-          <div class="meal-icon-wrapper lunch"><i class="fa-solid fa-sun"></i></div>
-          <div>
-            <h4>Lunch Menu (${state.selectedThaliDay})</h4>
-            <span class="meal-time"><i class="fa-regular fa-clock"></i> Served: 11:30 AM – 3:30 PM</span>
-          </div>
+    <div class="thali-sheet-content">
+      <div class="thali-sheet-day-banner">
+        <div class="day-banner-left">
+          <h4>${state.selectedThaliDay}'s Thali: ${curDayData.name}</h4>
+          <span class="day-pure-veg"><i class="fa-solid fa-circle"></i> 100% Pure Veg Homestyle</span>
         </div>
-        <ul class="meal-items-list">
-          <li><strong>Main Gravy:</strong> <span>${curDayData.lunch.main}</span></li>
-          <li><strong>Dry Sabzi:</strong> <span>${curDayData.lunch.dry}</span></li>
-          <li><strong>Dal:</strong> <span>${curDayData.lunch.dal}</span></li>
-          <li><strong>Breads & Rice:</strong> <span>${curDayData.lunch.breads}</span></li>
-          <li><strong>Accompaniments:</strong> <span>${curDayData.lunch.sides}</span></li>
-        </ul>
+        <div class="day-banner-price">₹${curDayData.price}</div>
       </div>
 
-      <!-- Dinner Box -->
-      <div class="meal-block">
-        <div class="meal-block-header">
-          <div class="meal-icon-wrapper dinner"><i class="fa-solid fa-moon"></i></div>
-          <div>
-            <h4>Dinner Menu (${state.selectedThaliDay})</h4>
-            <span class="meal-time"><i class="fa-regular fa-clock"></i> Served: 7:00 PM – 10:30 PM</span>
+      <!-- Vertical Stack of Meals: Lunch on top, Dinner below (NO 2-column squeezing!) -->
+      <div class="thali-meals-stack">
+        <!-- Lunch Box -->
+        <div class="sheet-meal-box lunch">
+          <div class="sheet-meal-header">
+            <span class="meal-chip lunch-chip"><i class="fa-solid fa-sun"></i> LUNCH</span>
+            <span class="meal-timing"><i class="fa-regular fa-clock"></i> 11:30 AM – 3:30 PM</span>
+          </div>
+          <div class="dish-item-rows">
+            <div class="dish-line">
+              <span class="dish-label">Main Gravy</span>
+              <span class="dish-value">${curDayData.lunch.main}</span>
+            </div>
+            <div class="dish-line">
+              <span class="dish-label">Dry Sabzi</span>
+              <span class="dish-value">${curDayData.lunch.dry}</span>
+            </div>
+            <div class="dish-line">
+              <span class="dish-label">Dal</span>
+              <span class="dish-value">${curDayData.lunch.dal}</span>
+            </div>
+            <div class="dish-line">
+              <span class="dish-label">Breads & Rice</span>
+              <span class="dish-value">${curDayData.lunch.breads}</span>
+            </div>
+            <div class="dish-line">
+              <span class="dish-label">Sides & Sweet</span>
+              <span class="dish-value">${curDayData.lunch.sides}</span>
+            </div>
           </div>
         </div>
-        <ul class="meal-items-list">
-          <li><strong>Main Gravy:</strong> <span>${curDayData.dinner.main}</span></li>
-          <li><strong>Dry Sabzi:</strong> <span>${curDayData.dinner.dry}</span></li>
-          <li><strong>Dal:</strong> <span>${curDayData.dinner.dal}</span></li>
-          <li><strong>Breads & Rice:</strong> <span>${curDayData.dinner.breads}</span></li>
-          <li><strong>Accompaniments:</strong> <span>${curDayData.dinner.sides}</span></li>
-        </ul>
-      </div>
-    </div>
 
-    <!-- Footer Bar -->
-    <div class="thali-footer-bar">
-      <div class="thali-note-box">
-        <i class="fa-solid fa-circle-info"></i>
-        <span><strong>Chef's Note:</strong> ${curDayData.specialNote || 'Prepared fresh with pure mustard oil and desi ghee. Pure veg kitchen.'}</span>
+        <!-- Dinner Box -->
+        <div class="sheet-meal-box dinner">
+          <div class="sheet-meal-header">
+            <span class="meal-chip dinner-chip"><i class="fa-solid fa-moon"></i> DINNER</span>
+            <span class="meal-timing"><i class="fa-regular fa-clock"></i> 7:00 PM – 10:30 PM</span>
+          </div>
+          <div class="dish-item-rows">
+            <div class="dish-line">
+              <span class="dish-label">Main Gravy</span>
+              <span class="dish-value">${curDayData.dinner.main}</span>
+            </div>
+            <div class="dish-line">
+              <span class="dish-label">Dry Sabzi</span>
+              <span class="dish-value">${curDayData.dinner.dry}</span>
+            </div>
+            <div class="dish-line">
+              <span class="dish-label">Dal</span>
+              <span class="dish-value">${curDayData.dinner.dal}</span>
+            </div>
+            <div class="dish-line">
+              <span class="dish-label">Breads & Rice</span>
+              <span class="dish-value">${curDayData.dinner.breads}</span>
+            </div>
+            <div class="dish-line">
+              <span class="dish-label">Sides & Sweet</span>
+              <span class="dish-value">${curDayData.dinner.sides}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chef's Note -->
+        <div class="sheet-chef-note">
+          <i class="fa-solid fa-circle-info"></i>
+          <div><strong>Chef's Note:</strong> ${curDayData.specialNote || 'Prepared fresh daily with pure desi ghee and mustard oil. 100% hygienic homestyle kitchen.'}</div>
+        </div>
       </div>
-      <div class="thali-order-group">
-        <div class="thali-total-price">₹${curDayData.price} <span style="font-size: 13px; color: var(--text-muted); font-weight: 500;">/ plate</span></div>
-        <button class="primary-btn" id="orderDayThaliBtn">
-          <i class="fa-solid fa-cart-plus"></i> Order ${state.selectedThaliDay}'s Thali
+
+      <!-- Action Button -->
+      <div class="sheet-footer-order-bar">
+        <button class="sheet-add-btn" id="orderDayThaliBtn">
+          <i class="fa-solid fa-plus"></i> Add ${state.selectedThaliDay}'s Thali (₹${curDayData.price})
         </button>
       </div>
     </div>
   `;
 
-  document.getElementById("orderDayThaliBtn").addEventListener("click", () => {
-    addToCart({
-      id: `thali-${state.selectedThaliDay}`,
-      name: `${state.selectedThaliDay} Thali (${curDayData.name})`,
-      price: curDayData.price,
-      unit: "1 Plate",
-      image: "https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?w=500&auto=format&fit=crop&q=60"
+  const orderBtn = document.getElementById("orderDayThaliBtn");
+  if (orderBtn) {
+    orderBtn.addEventListener("click", () => {
+      addToCart({
+        id: `thali-${state.selectedThaliDay}`,
+        name: `${state.selectedThaliDay} Thali (${curDayData.name})`,
+        price: curDayData.price,
+        unit: "1 Plate",
+        image: "https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?w=500&auto=format&fit=crop&q=60"
+      });
+      closeThaliModal();
     });
-  });
+  }
 
   // Admin hint button
-  if (state.isAdminLoggedIn) {
+  if (state.isAdminLoggedIn && DOM.adminThaliHint) {
     DOM.adminThaliHint.style.display = "block";
-    DOM.quickEditThaliBtn.onclick = () => {
-      openAdminModal();
-      switchAdminTab("tab-thali-planner");
-      DOM.thaliDaySelect.value = state.selectedThaliDay;
-      loadThaliDayToForm(state.selectedThaliDay);
-    };
-  } else {
+    if (DOM.quickEditThaliBtn) {
+      DOM.quickEditThaliBtn.onclick = () => {
+        closeThaliModal();
+        openAdminModal();
+        switchAdminTab("tab-thali-planner");
+        DOM.thaliDaySelect.value = state.selectedThaliDay;
+        loadThaliDayToForm(state.selectedThaliDay);
+      };
+    }
+  } else if (DOM.adminThaliHint) {
     DOM.adminThaliHint.style.display = "none";
   }
 }
@@ -1616,7 +1677,7 @@ function setupEventListeners() {
       e.preventDefault();
       const cat = link.getAttribute("data-category");
       if (cat === "thali") {
-        document.getElementById("thaliScheduleSection").scrollIntoView({ behavior: "smooth" });
+        openThaliModal(state.getTodayDayName());
       } else {
         const matchingBtn = DOM.categoryTabs.querySelector(`[data-category="${cat}"]`);
         if (matchingBtn) matchingBtn.click();
@@ -1645,15 +1706,23 @@ function setupEventListeners() {
   // Today's Thali View Button in Nav & Hero
   if (DOM.viewTodayThaliBtn) {
     DOM.viewTodayThaliBtn.addEventListener("click", () => {
-      state.selectedThaliDay = state.getTodayDayName();
-      renderThaliSchedule();
-      document.getElementById("thaliScheduleSection").scrollIntoView({ behavior: "smooth" });
+      openThaliModal(state.getTodayDayName());
     });
   }
 
   if (DOM.heroViewWeekBtn) {
     DOM.heroViewWeekBtn.addEventListener("click", () => {
-      document.getElementById("thaliScheduleSection").scrollIntoView({ behavior: "smooth" });
+      openThaliModal(state.getTodayDayName());
+    });
+  }
+
+  // Weekly Thali Schedule Modal Controls
+  if (DOM.closeThaliScheduleBtn) {
+    DOM.closeThaliScheduleBtn.addEventListener("click", closeThaliModal);
+  }
+  if (DOM.thaliScheduleModalBackdrop) {
+    DOM.thaliScheduleModalBackdrop.addEventListener("click", (e) => {
+      if (e.target === DOM.thaliScheduleModalBackdrop) closeThaliModal();
     });
   }
 
@@ -1823,9 +1892,7 @@ function setupEventListeners() {
   if (DOM.mobNavThali) {
     DOM.mobNavThali.addEventListener("click", () => {
       setActiveMobNav("mobNavThali");
-      state.selectedThaliDay = state.getTodayDayName();
-      renderThaliSchedule();
-      document.getElementById("thaliScheduleSection").scrollIntoView({ behavior: "smooth" });
+      openThaliModal(state.getTodayDayName());
     });
   }
 
