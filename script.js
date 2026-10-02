@@ -1593,10 +1593,10 @@ function setupEventListeners() {
     renderProducts();
   });
 
-  // Category filter tabs
-  DOM.categoryTabs.querySelectorAll(".cat-pill").forEach(pill => {
+  // Category filter tabs & Zepto rail items
+  DOM.categoryTabs.querySelectorAll(".cat-pill, .rail-item").forEach(pill => {
     pill.addEventListener("click", () => {
-      DOM.categoryTabs.querySelectorAll(".cat-pill").forEach(p => p.classList.remove("active"));
+      DOM.categoryTabs.querySelectorAll(".cat-pill, .rail-item").forEach(p => p.classList.remove("active"));
       pill.classList.add("active");
       state.activeCategory = pill.getAttribute("data-category");
       renderProducts();
@@ -1629,21 +1629,26 @@ function setupEventListeners() {
     DOM.searchInput.value = "";
     state.searchQuery = "";
     state.activeCategory = "all";
-    DOM.categoryTabs.querySelectorAll(".cat-pill").forEach(p => p.classList.remove("active"));
-    DOM.categoryTabs.querySelector('[data-category="all"]').classList.add("active");
+    DOM.categoryTabs.querySelectorAll(".cat-pill, .rail-item").forEach(p => p.classList.remove("active"));
+    const allBtn = DOM.categoryTabs.querySelector('[data-category="all"]');
+    if (allBtn) allBtn.classList.add("active");
     renderProducts();
   });
 
   // Today's Thali View Button in Nav & Hero
-  DOM.viewTodayThaliBtn.addEventListener("click", () => {
-    state.selectedThaliDay = state.getTodayDayName();
-    renderThaliSchedule();
-    document.getElementById("thaliScheduleSection").scrollIntoView({ behavior: "smooth" });
-  });
+  if (DOM.viewTodayThaliBtn) {
+    DOM.viewTodayThaliBtn.addEventListener("click", () => {
+      state.selectedThaliDay = state.getTodayDayName();
+      renderThaliSchedule();
+      document.getElementById("thaliScheduleSection").scrollIntoView({ behavior: "smooth" });
+    });
+  }
 
-  DOM.heroViewWeekBtn.addEventListener("click", () => {
-    document.getElementById("thaliScheduleSection").scrollIntoView({ behavior: "smooth" });
-  });
+  if (DOM.heroViewWeekBtn) {
+    DOM.heroViewWeekBtn.addEventListener("click", () => {
+      document.getElementById("thaliScheduleSection").scrollIntoView({ behavior: "smooth" });
+    });
+  }
 
   // Cart Drawer
   DOM.openCartBtn.addEventListener("click", openCartDrawer);

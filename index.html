@@ -17,130 +17,112 @@
 </head>
 <body>
 
-  <!-- Top Announcement Bar -->
-  <div class="top-announcement">
-    <div class="container announcement-inner">
-      <span><i class="fa-solid fa-sparkles"></i> <strong>Welcome to Restrofe!</strong> Fresh Shakes, Chilled Coffee, Daily Groceries & Homestyle Thalis.</span>
-      <span class="announcement-badge"><i class="fa-solid fa-clock"></i> Today's Special Thali is live!</span>
-    </div>
-  </div>
-
-  <!-- Main Navigation -->
-  <header class="navbar">
-    <div class="container nav-content">
-      <div class="brand-logo" id="brandLogo">
-        <div class="logo-dots">
-          <span></span><span></span>
-          <span></span><span></span>
+  <!-- App Header (Zepto / Blinkit Quick-Commerce Mobile Style) -->
+  <header class="app-top-header">
+    <div class="container app-header-content">
+      <div class="delivery-location-info" id="brandLogo">
+        <div class="flash-badge">
+          <i class="fa-solid fa-bolt"></i> 10 MINS
         </div>
-        <div class="brand-text">
-          <h1>Restrofe</h1>
-          <span class="sub-tag">Shop & Cafe</span>
+        <div class="location-details">
+          <div class="store-name-row">
+            <h3>Restrofe Store & Cafe</h3>
+            <span class="live-dot"></span>
+          </div>
+          <span class="store-tagline">Biscuits, Chilled Shakes & Homestyle Thalis</span>
         </div>
       </div>
 
-      <!-- Search Input -->
-      <div class="search-box">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="searchInput" placeholder="Search biscuits, cold coffee, juices, thali...">
-        <button id="clearSearchBtn" class="clear-btn hidden"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-
-      <!-- Action Buttons -->
-      <div class="nav-actions">
-        <button class="nav-btn today-thali-btn" id="viewTodayThaliBtn">
-          <i class="fa-solid fa-calendar-day"></i>
-          <span>Today's Thali</span>
-        </button>
-
-        <button class="nav-btn admin-toggle-btn" id="openAdminModalBtn">
+      <div class="app-header-actions">
+        <button class="header-icon-btn admin-btn" id="openAdminModalBtn" title="Admin Portal">
           <i class="fa-solid fa-shield-halved"></i>
-          <span id="adminBtnText">Admin</span>
+          <span class="btn-subtext">Admin</span>
         </button>
-
-        <button class="nav-btn cart-btn" id="openCartBtn">
+        <button class="header-icon-btn cart-header-btn" id="openCartBtn" title="Shopping Cart">
           <i class="fa-solid fa-bag-shopping"></i>
-          <span class="cart-label">Cart</span>
           <span class="cart-count" id="cartCount">0</span>
         </button>
       </div>
     </div>
+
+    <!-- Sticky App Search Bar -->
+    <div class="container">
+      <div class="app-search-box">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="searchInput" placeholder='Search "Bourbon", "Cold Coffee", "Today&#39;s Thali"...'>
+        <button id="clearSearchBtn" class="clear-btn hidden"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
   </header>
 
-  <!-- Hero Banner -->
-  <section class="hero-section">
-    <div class="container hero-wrapper">
-      <div class="hero-text">
-        <span class="hero-tag"><i class="fa-solid fa-utensils"></i> All-In-One Store & Daily Kitchen</span>
-        <h2>Everything You Love: From <span>Crispy Biscuits</span> to <span>Thick Shakes</span> & <span>Daily Thalis</span></h2>
-        <p>Order daily essentials, freshly blended beverages, and subscribe or order our famous 7-day rotating homestyle thalis.</p>
-        
-        <div class="hero-stats">
-          <div class="stat-pill"><i class="fa-solid fa-check"></i> Fresh Ingredients</div>
-          <div class="stat-pill"><i class="fa-solid fa-bolt"></i> 15-Min Fast Prep</div>
-          <div class="stat-pill"><i class="fa-solid fa-calendar-check"></i> Different Thali Every Day</div>
-        </div>
+  <!-- Zepto-Style Quick Category Story Bubbles Rail -->
+  <nav class="category-rail-container">
+    <div class="container">
+      <div class="category-rail" id="categoryTabs">
+        <button class="rail-item active" data-category="all">
+          <div class="rail-icon-box"><i class="fa-solid fa-border-all"></i></div>
+          <span>All</span>
+        </button>
+        <button class="rail-item" data-category="thali">
+          <div class="rail-icon-box thali-icon"><i class="fa-solid fa-bowl-rice"></i></div>
+          <span>Thalis</span>
+        </button>
+        <button class="rail-item" data-category="coffee">
+          <div class="rail-icon-box coffee-icon"><i class="fa-solid fa-mug-hot"></i></div>
+          <span>Coffee</span>
+        </button>
+        <button class="rail-item" data-category="shakes">
+          <div class="rail-icon-box shake-icon"><i class="fa-solid fa-blender"></i></div>
+          <span>Shakes</span>
+        </button>
+        <button class="rail-item" data-category="juices">
+          <div class="rail-icon-box juice-icon"><i class="fa-solid fa-wine-glass"></i></div>
+          <span>Juices</span>
+        </button>
+        <button class="rail-item" data-category="biscuits">
+          <div class="rail-icon-box biscuit-icon"><i class="fa-solid fa-cookie-bite"></i></div>
+          <span>Biscuits</span>
+        </button>
+        <button class="rail-item" data-category="general">
+          <div class="rail-icon-box general-icon"><i class="fa-solid fa-basket-shopping"></i></div>
+          <span>Snacks</span>
+        </button>
       </div>
+    </div>
+  </nav>
 
-      <!-- Hero Today's Thali Snapshot Card -->
-      <div class="hero-card-side">
-        <div class="today-thali-hero-card" id="heroTodayThaliCard">
-          <div class="card-status-pill">
-            <span class="pulse-dot"></span> <span id="heroCurrentDay">TODAY'S MENU</span>
-          </div>
-          <div class="hero-thali-header">
-            <div>
-              <h3 id="heroThaliTitle">Deluxe Homestyle Thali</h3>
-              <div class="thali-price" id="heroThaliPrice">₹120 <span class="unit">/ plate</span></div>
+  <!-- Zepto-Style "Today's Special Thali" Compact Promo Card (No bulky desktop hero) -->
+  <section class="today-thali-app-card-section">
+    <div class="container">
+      <div class="today-thali-app-card" id="heroTodayThaliCard">
+        <div class="thali-app-badge-row">
+          <span class="live-thali-badge">
+            <span class="pulse-dot"></span> <span id="heroCurrentDay">TODAY'S SPECIAL THALI</span>
+          </span>
+          <span class="pure-veg-tag"><i class="fa-solid fa-circle"></i> 100% PURE VEG</span>
+        </div>
+
+        <div class="thali-app-main-row">
+          <div class="thali-info-col">
+            <h3 id="heroThaliTitle">Deluxe Homestyle Thali</h3>
+            <div class="thali-items-preview" id="heroThaliItemsList">
+              <!-- Injected via JS -->
             </div>
-            <span class="veg-badge"><i class="fa-solid fa-circle"></i> 100% Pure Veg</span>
           </div>
 
-          <div class="thali-items-preview" id="heroThaliItemsList">
-            <!-- Dynamically populated -->
-          </div>
-
-          <div class="hero-thali-actions">
-            <button class="primary-btn hero-add-thali-btn" id="heroAddThaliBtn">
-              <i class="fa-solid fa-cart-plus"></i> Add Today's Thali
+          <div class="thali-cta-col">
+            <div class="thali-price" id="heroThaliPrice">₹120 <span class="unit">/ plate</span></div>
+            <button class="app-add-thali-btn" id="heroAddThaliBtn">
+              <i class="fa-solid fa-plus"></i> ADD THALI
             </button>
-            <button class="outline-btn hero-view-week-btn" id="heroViewWeekBtn">
-              View 7-Day Schedule
+            <button class="view-week-text-btn" id="heroViewWeekBtn">
+              Weekly Menu <i class="fa-solid fa-chevron-right"></i>
             </button>
           </div>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- Category Nav Tabs -->
-  <nav class="category-bar">
-    <div class="container">
-      <div class="category-scroll" id="categoryTabs">
-        <button class="cat-pill active" data-category="all">
-          <i class="fa-solid fa-border-all"></i> All Items
-        </button>
-        <button class="cat-pill" data-category="thali">
-          <i class="fa-solid fa-bowl-rice"></i> Daily Thalis & Meals
-        </button>
-        <button class="cat-pill" data-category="coffee">
-          <i class="fa-solid fa-mug-hot"></i> Cold Coffee
-        </button>
-        <button class="cat-pill" data-category="shakes">
-          <i class="fa-solid fa-blender"></i> Shakes & Smoothies
-        </button>
-        <button class="cat-pill" data-category="juices">
-          <i class="fa-solid fa-wine-glass"></i> Fresh Juices
-        </button>
-        <button class="cat-pill" data-category="biscuits">
-          <i class="fa-solid fa-cookie-bite"></i> Biscuits & Snacks
-        </button>
-        <button class="cat-pill" data-category="general">
-          <i class="fa-solid fa-basket-shopping"></i> General Store
-        </button>
-      </div>
-    </div>
-  </nav>
 
   <!-- 7-Day Thali Schedule Section -->
   <section class="thali-schedule-section" id="thaliScheduleSection">
